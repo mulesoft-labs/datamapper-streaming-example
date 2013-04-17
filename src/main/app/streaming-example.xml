@@ -1,23 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" version="EE-3.3.2"
+<mule xmlns:data-mapper="http://www.mulesoft.org/schema/mule/ee/data-mapper" version="EE-3.4.0"
 	xmlns="http://www.mulesoft.org/schema/mule/core"
 	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
 	xmlns:spring="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http" 
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
 http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
-http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd">
-
-    <flow name="without-streaming" doc:name="without-streaming">
-        <http:inbound-endpoint exchange-pattern="request-response" host="localhost" port="8081" path="without" doc:name="HTTP"/>
-        <set-payload value="without" />
-    </flow>
+http://www.mulesoft.org/schema/mule/ee/data-mapper http://www.mulesoft.org/schema/mule/ee/data-mapper/current/mule-data-mapper.xsd">
+    <data-mapper:config name="csv2map_grf" transformationGraphPath="csv2map.grf" doc:name="csv2map_grf"/>
 
     <flow name="with-streaming" doc:name="with-streaming">
-        <http:inbound-endpoint exchange-pattern="request-response" host="localhost" port="8081" path="with" doc:name="HTTP"/>
-        <set-payload value="with" />
+        <http:inbound-endpoint exchange-pattern="request-response" host="localhost" port="8081" path="process" doc:name="HTTP"/>
+        <custom-processor name="resource-as-stream" class="org.mule.iapp.example.streaming.ResourceProvider" doc:name="Custom Processor"/>
+        <data-mapper:transform config-ref="csv2map_grf" stream="true" doc:name="DataMapper"/>
+        <foreach batchSize="2" doc:name="For Each">
+            <logger message="Got a bunch!" level="INFO" doc:name="Logger"/>
+            <logger message="#[payload]" level="INFO" doc:name="Logger"/>
+        </foreach>
+        <set-payload value="Finished processing :D" doc:name="Set Payload"/>
     </flow>
 
 </mule>
