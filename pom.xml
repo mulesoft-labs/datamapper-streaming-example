@@ -154,34 +154,8 @@
             <version>${mule.version}</version>
             <scope>provided</scope>
         </dependency>
-        <!-- Xml configuration -->
-        <dependency>
-            <groupId>org.mule.modules</groupId>
-            <artifactId>mule-module-spring-config</artifactId>
-            <version>${mule.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.mulesoft.muleesb</groupId>
-            <artifactId>mule-core-ee</artifactId>
-            <version>${mule.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <!-- Xml configuration -->
-        <dependency>
-            <groupId>com.mulesoft.muleesb.modules</groupId>
-            <artifactId>mule-module-spring-config-ee</artifactId>
-            <version>${mule.version}</version>
-            <scope>provided</scope>
-        </dependency>
 
         <!-- Mule Transports -->
-        <dependency>
-            <groupId>org.mule.transports</groupId>
-            <artifactId>mule-transport-file</artifactId>
-            <version>${mule.version}</version>
-            <scope>provided</scope>
-        </dependency>
         <dependency>
             <groupId>org.mule.transports</groupId>
             <artifactId>mule-transport-http</artifactId>
@@ -209,15 +183,6 @@
             <id>mulesoft-releases</id>
             <name>MuleSoft Releases</name>
             <url>http://repository.mulesoft.org/releases/</url>
-        </repository>
-        <repository>
-            <id>oss-sonatype-snapshots</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-        </repository>
-        <repository>
-            <id>codehaus-snaphosts</id>
-            <name>Codehaus Snapshots</name>
-            <url>http://snapshots.repository.codehaus.org/</url>
         </repository>
         <repository>
             <id>codehaus-releases</id>
