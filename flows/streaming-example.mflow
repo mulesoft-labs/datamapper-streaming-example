@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <mule-configuration xmlns="http://www.mulesoft.com/tooling/messageflow" name="streaming-example">
-    <global-element type="http://www.mulesoft.org/schema/mule/ee/data-mapper/config" name="DataMapper" entity-id="DataMapper#1">
+    <global-element type="http://www.mulesoft.org/schema/mule/ee/data-mapper/config" name="csv2map_grf" entity-id="!!!d37ffd71-be32-47e9-a0ed-1f3956d04e75">
         <properties>
+            <property value="" name="doc:description"/>
+            <property value="csv2map_grf" name="doc:name"/>
             <property value="csv2map_grf" name="name"/>
-            <property value="1" name="auxiliary;index"/>
             <property value="csv2map.grf" name="transformationGraphPath"/>
         </properties>
     </global-element>
-    <flow SubFlow="false" name="with-streaming" entity-id="6995afb8-7a3e-4ec3-9c0f-0de1319851c2">
+    <flow SubFlow="false" name="with-streaming" entity-id="2884680b-4864-40d8-8b16-7d2bb141df50">
         <properties>
             <property name="processingStrategy"/>
             <property name="processingStrategy2"/>
             <property name="bussinessEventsLabel"/>
+            <property value="1" name="auxiliary;index"/>
             <property name="tracking:enable-default-events"/>
-            <property value="2" name="auxiliary;index"/>
         </properties>
         <lane isChoiceOtherwiseLane="false" index="0" hadOnlyOneElement="false" entity-id="compartment-lane#1">
             <graphicalData height="0" width="0" y="0" x="0"/>
             <endpoint message-exchange-pattern="RequestResponse" direction="Inbound" type="http://www.mulesoft.org/schema/mule/http/endpoint" name="HTTP" entity-id="HTTP#1">
-                <graphicalData height="0" width="0" y="0" x="0"/>
+                <graphicalData height="192" width="68" y="212" x="19"/>
                 <properties>
                     <property value="8081" name="port"/>
                     <property value="localhost" name="host"/>
@@ -32,48 +33,49 @@
                     <property value="request-response" name="exchange-pattern"/>
                     <property name="tracking:enable-default-events"/>
                     <property name="ref"/>
-                    <property name="transformer-refs"/>
                     <property name="httpLabel"/>
+                    <property name="transformer-refs"/>
                     <property name="address"/>
-                    <property value="process" name="path"/>
                     <property name="encoding"/>
+                    <property value="process" name="path"/>
                     <property name="responseTransformer-refs"/>
                     <property name="method"/>
                     <property name="user"/>
-                    <property name="responseTimeout"/>
+                    <property value="2" name="auxiliary;index"/>
                     <property name="mimeType"/>
-                    <property value="3" name="auxiliary;index"/>
+                    <property name="responseTimeout"/>
                     <property name="connector-ref"/>
                 </properties>
             </endpoint>
             <pattern type="http://www.mulesoft.org/schema/mule/core/custom-processor" name="Get the csv's Stream" entity-id="Custom Processor#1">
-                <graphicalData height="0" width="0" y="0" x="0"/>
+                <graphicalData height="67" width="122" y="212" x="147"/>
                 <properties>
-                    <property value="resource-as-stream" name="name"/>
                     <property value="org.mule.iapp.example.streaming.ResourceProvider" name="class"/>
-                    <property value="4" name="auxiliary;index"/>
+                    <property value="3" name="auxiliary;index"/>
                 </properties>
             </pattern>
-            <pattern type="http://www.mulesoft.org/schema/mule/ee/data-mapper/data-mapper-connector" name="Transform csv into a Map" entity-id="DataMapper#2">
+            <pattern type="http://www.mulesoft.org/schema/mule/ee/data-mapper/data-mapper-connector" name="DataMapper" entity-id="427711aa-5c1c-41a1-803e-8f38956b08d8">
                 <graphicalData height="0" width="0" y="0" x="0"/>
                 <properties>
-                    <property name="returnClass"/>
+                    <property value="" name="returnClass"/>
+                    <property value="#[payload]" name="input-ref"/>
                     <property value="true" name="stream"/>
-                    <property name="input-ref"/>
+                    <property name="updated"/>
                     <property value="http://www.mulesoft.org/schema/mule/ee/data-mapper/transform" name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute"/>
-                    <property name="pipeSize"/>
                     <property value="csv2map_grf" name="config-ref"/>
-                    <property value="5" name="auxiliary;index"/>
+                    <property value="2048" name="pipeSize"/>
+                    <property-collection name="@http://www.mulesoft.org/schema/mule/ee/data-mapper/input-arguments;1483223631"/>
                 </properties>
+                <description></description>
             </pattern>
             <scope type="http://www.mulesoft.org/schema/mule/core/foreach" name="For Each" entity-id="For Each#1">
-                <graphicalData height="0" width="0" y="0" x="0"/>
+                <graphicalData height="114" width="220" y="188" x="329"/>
                 <properties>
                     <property name="counterVariableName"/>
                     <property name="rootMessageVariableName"/>
                     <property value="2" name="batchSize"/>
                     <property name="collection"/>
-                    <property value="6" name="auxiliary;index"/>
+                    <property value="4" name="auxiliary;index"/>
                 </properties>
                 <compartment entity-id="compartment#1">
                     <lane isChoiceOtherwiseLane="false" index="0" hadOnlyOneElement="false" entity-id="compartment-lane#2">
@@ -83,7 +85,7 @@
 <property value="Got a bunch!" name="message"/>
 <property name="category"/>
 <property value="INFO" name="level"/>
-<property value="7" name="auxiliary;index"/>
+<property value="5" name="auxiliary;index"/>
                             </properties>
                         </pattern>
                         <pattern type="http://www.mulesoft.org/schema/mule/core/logger" name="Logger" entity-id="Logger#2">
@@ -92,17 +94,17 @@
 <property value="#[payload]" name="message"/>
 <property name="category"/>
 <property value="INFO" name="level"/>
-<property value="8" name="auxiliary;index"/>
+<property value="6" name="auxiliary;index"/>
                             </properties>
                         </pattern>
                     </lane>
                 </compartment>
             </scope>
             <pattern type="http://www.mulesoft.org/schema/mule/core/set-payload" name="Set Payload" entity-id="Set Payload#1">
-                <graphicalData height="0" width="0" y="0" x="0"/>
+                <graphicalData height="67" width="75" y="212" x="609"/>
                 <properties>
                     <property value="Finished processing :D" name="value"/>
-                    <property value="9" name="auxiliary;index"/>
+                    <property value="7" name="auxiliary;index"/>
                 </properties>
             </pattern>
         </lane>

@@ -13,7 +13,7 @@ public class ResourceProvider implements MessageProcessor {
      */
     @Override
     public MuleEvent process(final MuleEvent event) throws MuleException {
-        final InputStream in = this.getClass().getResourceAsStream("/characters.csv");
+        final InputStream in = this.getClass().getResourceAsStream("/elements.csv");
         event.getMessage().setPayload(in);
         return event;
     }
