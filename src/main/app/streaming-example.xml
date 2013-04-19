@@ -10,7 +10,7 @@
 http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
 http://www.mulesoft.org/schema/mule/ee/data-mapper http://www.mulesoft.org/schema/mule/ee/data-mapper/current/mule-data-mapper.xsd">
-    <data-mapper:config name="csv2map_grf" transformationGraphPath="csv2map.grf" doc:name="csv2map_grf"/>
+    <data-mapper:config name="csv2map_grf" transformationGraphPath="csv2map.grf" doc:name="csv 2 Map"/>
 
     <flow name="with-streaming" doc:name="with-streaming">
         <http:inbound-endpoint exchange-pattern="request-response" host="localhost" port="8081" path="with-streaming" doc:name="HTTP"/>

@@ -7,7 +7,7 @@
             <property value="csv2map.grf" name="transformationGraphPath"/>
         </properties>
     </global-element>
-    <flow SubFlow="false" name="with-streaming" entity-id="dd1d0f83-af45-4fea-b6e7-ae582bd26d5e">
+    <flow SubFlow="false" name="with-streaming" entity-id="fce96088-686c-4da8-9a69-2b08a9e2ee49">
         <properties>
             <property name="processingStrategy"/>
             <property name="processingStrategy2"/>
@@ -124,7 +124,7 @@
             </pattern>
         </lane>
     </flow>
-    <flow SubFlow="false" name="without-streaming" entity-id="d7738371-697f-4222-831f-993215ec4b73">
+    <flow SubFlow="false" name="without-streaming" entity-id="16ace19a-389f-49a9-94b0-260c027e0771">
         <properties>
             <property name="processingStrategy"/>
             <property name="processingStrategy2"/>
