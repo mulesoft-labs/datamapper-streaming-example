@@ -6,7 +6,7 @@ import org.mule.api.MuleEvent;
 import org.mule.api.MuleException;
 import org.mule.api.processor.MessageProcessor;
 
-public class ResourceProvider implements MessageProcessor {
+public class StreamedResourceProvider implements MessageProcessor {
 
     /**
      * Return the same MuleEvent, changing the Payload to a InputStream for the target file

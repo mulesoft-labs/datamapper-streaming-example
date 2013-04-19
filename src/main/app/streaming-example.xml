@@ -13,14 +13,28 @@ http://www.mulesoft.org/schema/mule/ee/data-mapper http://www.mulesoft.org/schem
     <data-mapper:config name="csv2map_grf" transformationGraphPath="csv2map.grf" doc:name="csv2map_grf"/>
 
     <flow name="with-streaming" doc:name="with-streaming">
-        <http:inbound-endpoint exchange-pattern="request-response" host="localhost" port="8081" path="process" doc:name="HTTP"/>
-        <custom-processor class="org.mule.iapp.example.streaming.ResourceProvider" doc:name="Get the csv's Stream"/>
+        <http:inbound-endpoint exchange-pattern="request-response" host="localhost" port="8081" path="with-streaming" doc:name="HTTP"/>
+        <logger level="INFO" message="Asking for content ready" />
+        <custom-processor class="org.mule.iapp.example.streaming.StreamedResourceProvider" doc:name="Get the csv's Stream"/>
+        <logger level="INFO" message="Content ready" />
         <data-mapper:transform config-ref="csv2map_grf" stream="true" doc:name="DataMapper"/>
-        <foreach batchSize="2" doc:name="For Each">
-            <logger message="Got a bunch!" level="INFO" doc:name="Logger"/>
-            <logger message="#[payload]" level="INFO" doc:name="Logger"/>
+        <logger level="INFO" message="Ready to process" />
+        <foreach batchSize="100" doc:name="For Each">
+            <logger message="Got a bunch!" level="DEBUG" doc:name="Logger"/>
         </foreach>
-        <set-payload value="Finished processing :D" doc:name="Set Payload"/>
+        <set-payload value="Finished processing with Streaming" doc:name="Set Payload"/>
     </flow>
 
+    <flow name="without-streaming" doc:name="without-streaming">
+        <http:inbound-endpoint exchange-pattern="request-response" host="localhost" port="8081" path="without-streaming" doc:name="HTTP"/>
+        <logger level="INFO" message="Asking for content ready" />
+        <custom-processor class="org.mule.iapp.example.streaming.NonStreamedResourceProvider" doc:name="Get the csv's content"/>
+        <logger level="INFO" message="Content ready" />
+        <data-mapper:transform config-ref="csv2map_grf" stream="true" doc:name="DataMapper"/>
+        <logger level="INFO" message="Ready to process" />
+        <foreach batchSize="100" doc:name="For Each">
+            <logger message="Got a bunch!" level="DEBUG" doc:name="Logger"/>
+        </foreach>
+        <set-payload value="Finished processing without Streaming" doc:name="Set Payload"/>
+    </flow>
 </mule>
