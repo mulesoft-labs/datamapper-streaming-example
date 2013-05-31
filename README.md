@@ -10,6 +10,6 @@ Clone the repo:
 
 Prepare Studio project
 
-   mvn studio:studio
+    mvn studio:studio
 
 Import in studio as "Mule Studio Project from External Location"
