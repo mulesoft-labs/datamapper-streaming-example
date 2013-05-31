@@ -12,6 +12,19 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 http://www.mulesoft.org/schema/mule/ee/data-mapper http://www.mulesoft.org/schema/mule/ee/data-mapper/current/mule-data-mapper.xsd">
     <data-mapper:config name="csv2map_grf" transformationGraphPath="csv2map.grf" doc:name="csv 2 Map"/>
 
+    <flow name="with-streaming-batch" doc:name="with-streaming">
+        <http:inbound-endpoint exchange-pattern="request-response" host="localhost" port="8081" path="with-streaming-batch" doc:name="HTTP"/>
+        <logger level="INFO" message="Asking for content ready" />
+        <custom-processor class="org.mule.iapp.example.streaming.StreamedResourceProvider" doc:name="Get the csv's Stream"/>
+        <logger level="INFO" message="Content ready" />
+        <data-mapper:transform config-ref="csv2map_grf" stream="true" doc:name="DataMapper"/>
+        <logger level="INFO" message="Ready to process" />
+        <foreach batchSize="100" doc:name="For Each">
+            <logger message="Got a bunch! (of #[payload.size()])" level="INFO" doc:name="Logger"/>
+        </foreach>
+        <set-payload value="Finished processing with Streaming" doc:name="Set Payload"/>
+    </flow>
+
     <flow name="with-streaming" doc:name="with-streaming">
         <http:inbound-endpoint exchange-pattern="request-response" host="localhost" port="8081" path="with-streaming" doc:name="HTTP"/>
         <logger level="INFO" message="Asking for content ready" />
@@ -19,8 +32,8 @@ http://www.mulesoft.org/schema/mule/ee/data-mapper http://www.mulesoft.org/schem
         <logger level="INFO" message="Content ready" />
         <data-mapper:transform config-ref="csv2map_grf" stream="true" doc:name="DataMapper"/>
         <logger level="INFO" message="Ready to process" />
-        <foreach batchSize="100" doc:name="For Each">
-            <logger message="Got a bunch!" level="DEBUG" doc:name="Logger"/>
+        <foreach doc:name="For Each">
+            <logger message="Got a bunch! (of #[payload.size()])" level="INFO" doc:name="Logger"/>
         </foreach>
         <set-payload value="Finished processing with Streaming" doc:name="Set Payload"/>
     </flow>
@@ -30,10 +43,10 @@ http://www.mulesoft.org/schema/mule/ee/data-mapper http://www.mulesoft.org/schem
         <logger level="INFO" message="Asking for content ready" />
         <custom-processor class="org.mule.iapp.example.streaming.NonStreamedResourceProvider" doc:name="Get the csv's content"/>
         <logger level="INFO" message="Content ready" />
-        <data-mapper:transform config-ref="csv2map_grf" stream="true" doc:name="DataMapper"/>
+        <data-mapper:transform config-ref="csv2map_grf" stream="false" doc:name="DataMapper"/>
         <logger level="INFO" message="Ready to process" />
         <foreach batchSize="100" doc:name="For Each">
-            <logger message="Got a bunch!" level="DEBUG" doc:name="Logger"/>
+            <logger message="Got a bunch! (of #[payload.size()])" level="INFO" doc:name="Logger"/>
         </foreach>
         <set-payload value="Finished processing without Streaming" doc:name="Set Payload"/>
     </flow>
