@@ -13,3 +13,11 @@ Prepare Studio project
     mvn studio:studio
 
 Import in studio as "Mule Studio Project from External Location"
+
+## What's with the examples?
+
+There are three flows, with different configurations:
+
+- with-streaming-batch: Processing starts as soon as possible, and when DataMapper maps _batchSize_ elements, the next processor is invoked
+- with-streaming: Processing starts as soon as possible, but you have no control over how many elements at a time are sent to the next processor
+- without-streaming: Processing starts only when all elements are mapped
